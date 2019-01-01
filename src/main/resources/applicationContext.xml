@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:sport.properties"/>
+
+    <!-- Define your beans here -->
+    <bean id="myLoggerConfig" class="com.tutorial.spring.iocdi.MyLoggerConfig" init-method="initLogger">
+        <property name="rootLoggerLevel" value="FINE" />
+        <property name="printedLoggerLevel" value="FINE"/>
+    </bean>
+
+    <bean id = "myFortune"
+          class = "com.tutorial.spring.iocdi.HappyFortuneService">
+
+    </bean>
+
+    <bean id = "myRandomFortune"
+          class = "com.tutorial.spring.iocdi.RandomFortuneService">
+
+    </bean>
+
+    <bean id="myCoach"
+            class="com.tutorial.spring.iocdi.SwimCoach">
+        <constructor-arg ref="myRandomFortune"/>
+    </bean>
+
+    <bean id="myCricketCoach"
+            class="com.tutorial.spring.iocdi.CricketCoach">
+        <property name="fortuneService" ref="myFortune"/>
+        <property name="email" value="${cricket_coach.email}"/>
+        <property name="team" value="${cricket_coach.team}"/>
+    </bean>
+</beans>
+
+
+
+
+
